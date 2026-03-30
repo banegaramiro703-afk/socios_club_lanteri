@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pagos - Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.0">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark navbar-custom navbar-expand-lg">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <span class="navbar-brand mb-0 h1">⚽ Gestión de Pagos</span>
+        <div class="d-flex gap-2">
+            <a href="/" class="btn btn-outline-light btn-sm fw-bold">⬅️ Volver a Socios</a>
+            <a href="/resumen" class="btn btn-info btn-sm fw-bold text-white">📊 Resumen</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="alert alert-primary shadow-sm d-flex justify-content-between align-items-center mb-4" style="border-radius: var(--radius-md); border: none;" role="alert">
+        <div>
+            <h4 class="alert-heading mb-1">Socio: <strong>{{ socio.nombre }} {{ socio.apellido }}</strong></h4>
+            <p class="mb-0">DNI: {{ socio.dni }} | N° de Socio: {{ socio.id_socio }}</p>
+        </div>
+        <span class="badge bg-success fs-6">Estado: {{ socio.estado }}</span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold">
+                    💰 Registrar Nuevo Pago
+                </div>
+                <div class="card-body">
+                    <form action="/registrar_pago" method="POST">
+                        <input type="hidden" name="id_socio" value="{{ socio.id_socio }}">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Monto a Cobrar ($)</label>
+                            <input type="number" step="0.01" name="monto" class="form-control form-control-lg text-success fw-bold" placeholder="Ej: 5000" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label">Mes que paga</label>
+                                <select name="mes" class="form-select" required>
+                                    <option value="1">1 - Enero</option>
+                                    <option value="2">2 - Febrero</option>
+                                    <option value="3" selected>3 - Marzo</option>
+                                    <option value="4">4 - Abril</option>
+                                    <option value="5">5 - Mayo</option>
+                                    <option value="6">6 - Junio</option>
+                                    <option value="7">7 - Julio</option>
+                                    <option value="8">8 - Agosto</option>
+                                    <option value="9">9 - Septiembre</option>
+                                    <option value="10">10 - Octubre</option>
+                                    <option value="11">11 - Noviembre</option>
+                                    <option value="12">12 - Diciembre</option>
+                                </select>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label">Año</label>
+                                <input type="number" name="anio" class="form-control" value="2026" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Tipo de Pago</label>
+                            <select name="tipo" class="form-select mb-1">
+                                <option value="Mensual">Mensual (1 mes)</option>
+                                <option value="Anual">Anual (Adelanta 12 meses)</option>
+                            </select>
+                            <div class="form-text small text-muted">Si elige "Anual", el sistema le cargará 12 meses pagados.</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 fw-bold py-2">Confirmar Pago</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+                    <span>🧾 Historial de Recibos</span>
+                    <span class="badge bg-secondary">{{ pagos|length }} pagos registrados</span>
+                </div>
+                <div class="card-body p-0 table-responsive">
+                    <table class="table table-hover mb-0 align-middle text-center">
+                        <thead>
+                            <tr>
+                                <th>Período Pagado</th>
+                                <th>Monto</th>
+                                <th>Tipo</th>
+                                <th>Fecha de Operación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pago in pagos %}
+                            <tr>
+                                <td class="fw-bold">Mes {{ pago.mes }} / {{ pago.anio }}</td>
+                                <td class="text-success fw-bold">${{ pago.monto }}</td>
+                                <td><span class="badge bg-info text-white">{{ pago.tipo }}</span></td>
+                                <td class="text-muted small">{{ pago.fecha_registro }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">
+                                    <div class="fs-1 mb-2">🤷‍♂️</div>
+                                    Este socio no tiene ningún pago registrado todavía.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

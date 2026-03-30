@@ -1,0 +1,280 @@
+/* --- 1. IMPORTAR FUENTE MODERNA (Poppins) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* --- 2. VARIABLES GLOBALES (Para cambiar colores rápido) --- */
+:root {
+    --bg-main: #f0f4f8;        /* Gris Nube muy suave */
+    --primary: #003366;       /* Azul Profundo Atlántico */
+    --primary-light: #004a99; /* Azul Claro (anterior) */
+    --accent: #00bcd4;        /* Cian Vibrante (Acento moderno) */
+    --accent-dark: #0097a7;   /* Cian Oscuro para hovers */
+    --text-main: #2c3e50;
+    --text-muted: #7f8c8d;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.06); /* Sombra muy suave y difusa */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animación suave */
+    --radius-lg: 20px;
+    --radius-md: 12px;
+}
+
+/* --- 3. ESTILOS GENERALES (SOBREESCRIBIENDO BOOTSTRAP) --- */
+body {
+    font-family: 'Poppins', sans-serif; /* Fuente principal */
+    background-color: var(--bg-main) !important;
+    color: var(--text-main);
+    overflow-x: hidden;
+    letter-spacing: -0.2px; /* Espaciado moderno */
+}
+
+/* Modificar el color de fondo por defecto de Bootstrap .bg-light */
+.bg-light {
+    background-color: var(--bg-main) !important;
+}
+
+/* --- 4. BARRA DE NAVEGACIÓN MODERNA (Glassmorphism) --- */
+/* Eliminamos el fondo sólido y lo hacemos transparente y flotante */
+.navbar-custom {
+    background: rgba(0, 51, 102, 0.9) !important; /* Azul profundo semi-transparente */
+    backdrop-filter: blur(10px) saturate(180%); /* Efecto de desenfoque de vidrio */
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    border-radius: var(--radius-md);
+    margin: 15px; /* La hacemos flotar dentro del contenedor */
+    padding: 10px 20px !important;
+    transition: var(--transition);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+    color: #ffffff !important;
+}
+
+.navbar .btn {
+    border-radius: 50px !important; /* Botones de nav redondeados (píldora) */
+    font-weight: 600;
+    text-transform: none; /* Sin mayúsculas automáticas */
+    font-size: 0.85rem;
+}
+
+/* --- 5. TARJETAS (CARDS) NEOMÓRFICAS SOFT --- */
+.card {
+    border: none !important;
+    border-radius: var(--radius-lg) !important;
+    background: #ffffff;
+    box-shadow: var(--shadow-soft) !important;
+    transition: var(--transition);
+    margin-bottom: 20px;
+    overflow: hidden; /* Para que el contenido respete los bordes redondeados */
+}
+
+/* Efecto hover suave de "levantado" */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12) !important;
+}
+
+.card-header {
+    background-color: #ffffff !important; /* Encabezado blanco, minimalista */
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    padding: 20px 25px !important;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--primary) !important;
+    letter-spacing: -0.3px;
+    text-transform: none !important; /* Sin mayúsculas */
+}
+
+.card-body {
+    padding: 25px !important;
+}
+
+/* Tarjetas de indicadores (Socios totales, Recaudación) */
+.col-md-6 .card {
+    border-start-width: 0px !important; /* Quitamos el borde lateral rígido viejo */
+    position: relative;
+}
+
+/* Reemplazamos el borde lateral por un acento sutil en el fondo */
+.col-md-6 .card.border-primary::after,
+.col-md-6 .card.border-success::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 5px;
+    height: calc(100% - 40px);
+    border-radius: 10px;
+}
+
+.col-md-6 .card.border-primary::after { background-color: var(--primary); }
+.col-md-6 .card.border-success::after { background-color: #28a745; }
+
+.col-md-6 .card .display-5 {
+    font-weight: 800;
+    font-size: 3rem;
+    letter-spacing: -1.5px;
+}
+
+/* --- 6. TABLAS LIMPIAS Y MODERNAS --- */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(0, 188, 212, 0.05); /* Usamos el color de acento muy suave al hover */
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #ffffff !important;
+    color: var(--text-muted) !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 25px !important;
+    border-bottom: 2px solid rgba(0,0,0,0.05) !important;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody td {
+    padding: 18px 25px !important; /* Más espaciado (breathing room) */
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: rgba(0,0,0, 0.01) !important; /* Raya casi invisible */
+}
+
+/* Al pasar el mouse por la fila, resaltamos el texto */
+.table-hover tbody tr:hover {
+    color: var(--primary);
+}
+
+/* Socios inactivos con estilo moderno (gris desaturado sutil) */
+.socio-inactivo {
+    opacity: 0.6;
+    filter: grayscale(80%);
+    transition: var(--transition);
+}
+
+/* --- 7. BOTONES VIBRANTES (ESTILO MATERIAL DUAL) --- */
+.btn {
+    border-radius: var(--radius-md) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 12px 24px !important;
+    transition: var(--transition);
+    border: none !important; /* Sin bordes rígidos */
+    letter-spacing: -0.1px;
+}
+
+/* Botón Principal (Cyan Vibrante) */
+.btn-primary {
+    background-color: var(--accent) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4) !important;
+}
+
+/* Botón Danger (Rojo Coral moderno) */
+.btn-danger {
+    background-color: #ff5252 !important;
+    box-shadow: 0 4px 15px rgba(255, 82, 82, 0.3) !important;
+}
+
+.btn-danger:hover {
+    background-color: #ff1744 !important;
+    transform: translateY(-2px);
+}
+
+/* Botón Info (Azul Cobalto) */
+.btn-info {
+    background-color: #5c6bc0 !important;
+    color: #ffffff !important;
+}
+
+/* Botón Warning (Naranja Ámbar) */
+.btn-warning {
+    background-color: #ffa726 !important;
+    color: #ffffff !important;
+}
+
+/* Botones de acción Outline (más sutiles) */
+.btn-outline-success, .btn-outline-primary, .btn-outline-danger, .btn-outline-secondary {
+    border: 1.5px solid currentColor !important;
+    background: transparent !important;
+}
+
+.btn-outline-success:hover { background-color: rgba(40, 167, 69, 0.1) !important; color: #28a745 !important; }
+.btn-outline-primary:hover { background-color: rgba(0, 188, 212, 0.1) !important; color: var(--accent) !important; }
+
+/* Efecto micro-animación al pulsar cualquier botón */
+.btn:active {
+    transform: scale(0.96) translateY(0px) !important;
+}
+
+/* --- 8. ELEMENTOS DE FORMULARIO MODERNOS --- */
+.form-control, .form-select {
+    border-radius: var(--radius-md) !important;
+    border: 2px solid var(--bg-main) !important;
+    padding: 12px 18px !important;
+    background-color: var(--bg-main) !important;
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+/* Efecto de enfoque (Focus) moderno con el color de acento */
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent) !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.15) !important;
+    color: var(--primary) !important;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+}
+
+/* --- 9. OTROS DETALLES (Badges, Alertas, Modales) --- */
+.badge {
+    border-radius: 50px !important; /* Estilo píldora siempre */
+    padding: 7px 14px !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.3px;
+}
+
+.badge.bg-success { background-color: #e8f5e9 !important; color: #2e7d32 !important; } /* Verde suave moderno */
+.badge.bg-secondary { background-color: #f5f5f5 !important; color: #616161 !important; }
+.badge.bg-danger { background-color: #ffebee !important; color: #c62828 !important; }
+.badge.bg-warning { background-color: #fff3e0 !important; color: #ef6c00 !important; }
+
+.modal-content {
+    border-radius: var(--radius-lg) !important;
+    border: none !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2) !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    padding: 25px !important;
+}
+
+/* Buscador de socios (Borde píldora) */
+#buscadorSocios {
+    border-radius: 50px !important;
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+}
